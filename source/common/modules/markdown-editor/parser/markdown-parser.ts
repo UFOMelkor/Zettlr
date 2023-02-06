@@ -68,6 +68,7 @@ import { lua } from '@codemirror/legacy-modes/mode/lua'
 import { pascal } from '@codemirror/legacy-modes/mode/pascal'
 
 // Additional parser
+import { acronymParser } from './acronym-parser'
 import { citationParser } from './citation-parser'
 import { footnoteParser, footnoteRefParser } from './footnote-parser'
 import { frontmatterParser, yamlCodeParse } from './frontmatter-parser'
@@ -194,6 +195,7 @@ export default function markdownParser (config?: MarkdownParserConfig): Language
         // Add inline parsers that add AST elements for various additional types
         inlineMathParser,
         footnoteParser,
+        acronymParser,
         citationParser,
         sloppyParser,
         zknLinkParser(config?.zknLinkParserConfig),
@@ -208,6 +210,7 @@ export default function markdownParser (config?: MarkdownParserConfig): Language
         { name: 'YAMLFrontmatter' },
         { name: 'YAMLFrontmatterStart', style: customTags.YAMLFrontmatterStart },
         { name: 'YAMLFrontmatterEnd', style: customTags.YAMLFrontmatterEnd },
+        { name: 'Acronym', style: customTags.Acronym },
         { name: 'Citation', style: customTags.Citation },
         { name: 'HighlightMark', style: customTags.HighlightMark },
         // NOTE: The convention {TagName}/... means that the corresponding styles

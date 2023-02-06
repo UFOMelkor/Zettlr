@@ -17,6 +17,7 @@
 import AppearanceProvider from '@providers/appearance'
 import AssetsProvider from '@providers/assets'
 import CiteprocProvider from '@providers/citeproc'
+import AcronymsProvider from '@providers/acronyms'
 import CommandProvider from '@providers/commands'
 import ConfigProvider from '@providers/config'
 import CssProvider from '@providers/css'
@@ -41,6 +42,7 @@ export default class AppServiceContainer {
   private readonly _appearanceProvider: AppearanceProvider
   private readonly _assetsProvider: AssetsProvider
   private readonly _citeprocProvider: CiteprocProvider
+  private readonly _acronymsProvider: AcronymsProvider
   private readonly _commandProvider: CommandProvider
   private readonly _configProvider: ConfigProvider
   private readonly _cssProvider: CssProvider
@@ -80,6 +82,7 @@ export default class AppServiceContainer {
     this._linkProvider = new LinkProvider(this._logProvider, this._workspaces)
     this._windowProvider = new WindowProvider(this._logProvider, this._configProvider, this._documentManager)
     this._citeprocProvider = new CiteprocProvider(this._logProvider, this._configProvider, this._windowProvider)
+    this._acronymsProvider = new AcronymsProvider(this._logProvider)
     this._trayProvider = new TrayProvider(this._logProvider, this._configProvider, this._windowProvider)
     this._menuProvider = new MenuProvider(this._logProvider, this._configProvider, this._recentDocsProvider, this._commandProvider, this._windowProvider, this._documentManager)
     this._updateProvider = new UpdateProvider(this._logProvider, this._configProvider, this._commandProvider, this._windowProvider)
@@ -108,6 +111,7 @@ export default class AppServiceContainer {
     await this._informativeBoot(this._dictionaryProvider, 'DictionaryProvider')
     await this._informativeBoot(this._menuProvider, 'MenuProvider')
     await this._informativeBoot(this._citeprocProvider, 'CiteprocProvider')
+    await this._informativeBoot(this._acronymsProvider, 'AcronymsProvider')
     await this._informativeBoot(this._updateProvider, 'UpdateProvider')
 
     await this._informativeBoot(this._fsal, 'FSAL')
@@ -250,6 +254,7 @@ export default class AppServiceContainer {
     await this._safeShutdown(this._recentDocsProvider, 'RecentDocsProvider')
     await this._safeShutdown(this._dictionaryProvider, 'DictionaryProvider')
     await this._safeShutdown(this._citeprocProvider, 'CiteprocProvider')
+    await this._safeShutdown(this._acronymsProvider, 'AcronymsProvider')
     await this._safeShutdown(this._assetsProvider, 'AssetsProvider')
     await this._safeShutdown(this._appearanceProvider, 'AppearanceProvider')
     await this._safeShutdown(this._workspaces, 'WorkspaceProvider')
