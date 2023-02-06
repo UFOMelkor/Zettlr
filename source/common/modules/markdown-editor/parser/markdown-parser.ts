@@ -67,6 +67,7 @@ import { octave } from '@codemirror/legacy-modes/mode/octave'
 import { lua } from '@codemirror/legacy-modes/mode/lua'
 
 // Additional parser
+import { acronymParser } from './acronym-parser'
 import { citationParser } from './citation-parser'
 import { footnoteParser, footnoteRefParser } from './footnote-parser'
 import { plainLinkParser } from './plain-link-parser'
@@ -182,6 +183,7 @@ export default function markdownParser (): LanguageSupport {
         // Add inline parsers that add AST elements for various additional types
         inlineMathParser,
         footnoteParser,
+        acronymParser,
         citationParser,
         plainLinkParser,
         sloppyParser,
@@ -203,6 +205,7 @@ export default function markdownParser (): LanguageSupport {
         { name: 'YAMLFrontmatterPair', style: customTags.YAMLFrontmatterPair },
         { name: 'YAMLFrontmatterSeq', style: customTags.YAMLFrontmatterSeq },
         { name: 'YAMLFrontmatterMap', style: customTags.YAMLFrontmatterMap },
+        { name: 'Acronym', style: customTags.Acronym },
         { name: 'Citation', style: customTags.Citation },
         { name: 'Highlight', style: customTags.Highlight },
         { name: 'HighlightContent', style: customTags.HighlightContent },
