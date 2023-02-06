@@ -17,6 +17,7 @@
 import AppearanceProvider from '@providers/appearance'
 import AssetsProvider from '@providers/assets'
 import CiteprocProvider from '@providers/citeproc'
+import AcronymsProvider from '@providers/acronyms'
 import CommandProvider from '@providers/commands'
 import ConfigProvider from '@providers/config'
 import CssProvider from '@providers/css'
@@ -74,6 +75,7 @@ export class AppServiceContainer {
   private readonly _appearanceProvider: AppearanceProvider
   private readonly _assetsProvider: AssetsProvider
   private readonly _citeprocProvider: CiteprocProvider
+  private readonly _acronymsProvider: AcronymsProvider
   private readonly _commandProvider: CommandProvider
   private readonly _configProvider: ConfigProvider
   private readonly _cssProvider: CssProvider
@@ -113,13 +115,14 @@ export class AppServiceContainer {
 
     this._targetProvider = new TargetProvider(this._logProvider, this._fsal)
     this._linkProvider = new LinkProvider(this._logProvider, this._configProvider, this._fsal)
-    
+
     // The document provider accesses only the FSAL in its constructor
     this._documentManager = new DocumentManager(this)
     this._tagProvider = new TagProvider(this._logProvider, this._documentManager, this._configProvider, this._fsal)
     this._windowProvider = new WindowProvider(this._logProvider, this._configProvider, this._documentManager)
 
     this._citeprocProvider = new CiteprocProvider(this._logProvider, this._configProvider, this._windowProvider)
+    this._acronymsProvider = new AcronymsProvider(this._logProvider)
     this._trayProvider = new TrayProvider(this._logProvider, this._configProvider, this._windowProvider)
 
     // The command provider only needs the container for running the commands,
@@ -185,7 +188,8 @@ export class AppServiceContainer {
     await this._informativeBoot(this._tagProvider, 'TagProvider')
     await this._informativeBoot(this._trayProvider, 'TrayProvider')
     await this._informativeBoot(this._citeprocProvider, 'CiteprocProvider')
-    
+    await this._informativeBoot(this._acronymsProvider, 'AcronymsProvider')
+
     await this._informativeBoot(this._documentManager, 'DocumentManager')
     await this._informativeBoot(this._menuProvider, 'MenuProvider')
     await this._informativeBoot(this._updateProvider, 'UpdateProvider')
@@ -327,6 +331,7 @@ export class AppServiceContainer {
     await this._safeShutdown(this._recentDocsProvider, 'RecentDocsProvider')
     await this._safeShutdown(this._dictionaryProvider, 'DictionaryProvider')
     await this._safeShutdown(this._citeprocProvider, 'CiteprocProvider')
+    await this._safeShutdown(this._acronymsProvider, 'AcronymsProvider')
     await this._safeShutdown(this._assetsProvider, 'AssetsProvider')
     await this._safeShutdown(this._appearanceProvider, 'AppearanceProvider')
     await this._safeShutdown(this._configProvider, 'ConfigProvider')

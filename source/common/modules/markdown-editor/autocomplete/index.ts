@@ -28,6 +28,7 @@ import { snippets } from './snippets'
 import { files } from './files'
 import { tags } from './tags'
 import { headings } from './headings'
+import { acronymClasses, acronyms } from '@common/modules/markdown-editor/autocomplete/acronyms'
 
 export interface AutocompletePlugin {
   /**
@@ -77,7 +78,7 @@ const autocompleteSource: CompletionSource = function (ctx): CompletionResult|nu
   let startpos = ctx.pos
 
   // NOTE: Headings has to be checked before tags
-  for (const p of [ codeBlocks, citations, files, headings, tags, snippets ]) {
+  for (const p of [ codeBlocks, citations, files, headings, tags, snippets, acronyms, acronymClasses ]) {
     const res = p.applies(ctx)
     if (res !== false) {
       plugin = p
