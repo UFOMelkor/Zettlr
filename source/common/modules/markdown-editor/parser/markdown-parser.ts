@@ -67,6 +67,7 @@ import { octave } from '@codemirror/legacy-modes/mode/octave'
 import { lua } from '@codemirror/legacy-modes/mode/lua'
 
 // Additional parser
+import { acronymParser } from './acronym-parser'
 import { citationParser } from './citation-parser'
 import { footnoteParser, footnoteRefParser } from './footnote-parser'
 import { frontmatterParser, yamlCodeParse } from './frontmatter-parser'
@@ -192,6 +193,7 @@ export default function markdownParser (config?: MarkdownParserConfig): Language
         // Add inline parsers that add AST elements for various additional types
         inlineMathParser,
         footnoteParser,
+        acronymParser,
         citationParser,
         sloppyParser,
         zknLinkParser(config?.zknLinkParserConfig),
@@ -205,6 +207,15 @@ export default function markdownParser (config?: MarkdownParserConfig): Language
         { name: 'YAMLFrontmatter' },
         { name: 'YAMLFrontmatterStart', style: customTags.YAMLFrontmatterStart },
         { name: 'YAMLFrontmatterEnd', style: customTags.YAMLFrontmatterEnd },
+        { name: 'YAMLFrontmatterKey', style: customTags.YAMLFrontmatterKey },
+        { name: 'YAMLFrontmatterString', style: customTags.YAMLFrontmatterString },
+        { name: 'YAMLFrontmatterBoolean', style: customTags.YAMLFrontmatterBoolean },
+        { name: 'YAMLFrontmatterNumber', style: customTags.YAMLFrontmatterNumber },
+        { name: 'YAMLFrontmatterPlain', style: customTags.YAMLFrontmatterPlain },
+        { name: 'YAMLFrontmatterPair', style: customTags.YAMLFrontmatterPair },
+        { name: 'YAMLFrontmatterSeq', style: customTags.YAMLFrontmatterSeq },
+        { name: 'YAMLFrontmatterMap', style: customTags.YAMLFrontmatterMap },
+        { name: 'Acronym', style: customTags.Acronym },
         { name: 'Citation', style: customTags.Citation },
         { name: 'Highlight', style: customTags.Highlight },
         { name: 'HighlightContent', style: customTags.HighlightContent },

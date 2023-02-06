@@ -20,6 +20,7 @@ import { renderLinks } from './render-links'
 import { renderMath } from './render-math'
 import { renderTasks } from './render-tasks'
 import { renderCitations } from './render-citations'
+import { renderAcronyms } from './render-acronyms'
 import { renderMermaid } from './render-mermaid'
 import { renderKroki } from './render-kroki'
 import { renderTables } from './render-tables'
@@ -30,7 +31,7 @@ import { configField, type EditorConfiguration } from '../util/configuration'
 const renderCompartment = new Compartment()
 
 const transactionExtender = EditorState.transactionExtender.from(configField, config => transaction => {
-  const ext: Extension[] = [ renderMermaid, renderKroki ]
+  const ext: Extension[] = [ renderMermaid, renderKroki, renderAcronyms ]
   if (config.renderImages) ext.push(renderImages)
   if (config.renderLinks) ext.push(renderLinks)
   if (config.renderMath) ext.push(renderMath)
@@ -64,7 +65,7 @@ const transactionExtender = EditorState.transactionExtender.from(configField, co
  * @return  {Extension}                             The extension set
  */
 export function renderers (config?: Partial<EditorConfiguration>): Extension {
-  const ext: Extension[] = [ renderMermaid, renderKroki ]
+  const ext: Extension[] = [ renderMermaid, renderKroki, renderAcronyms ]
   if (config?.renderImages === true) ext.push(renderImages)
   if (config?.renderLinks === true) ext.push(renderLinks)
   if (config?.renderMath === true) ext.push(renderMath)
