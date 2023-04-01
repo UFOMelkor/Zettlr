@@ -13640,6 +13640,7 @@ __metadata:
     fix-path: ^4.0.0
     fsevents: ^2.3.2
     gettext-parser: ^7.0.1
+    global-agent: ^3.0.0
     got: ^13.0.0
     jsdom: ^22.1.0
     katex: ^0.16.7
