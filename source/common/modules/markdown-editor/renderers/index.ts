@@ -22,6 +22,7 @@ import { renderTasks } from './render-tasks'
 import { renderCitations } from './render-citations'
 import { renderAcronyms } from './render-acronyms'
 import { renderMermaid } from './render-mermaid'
+import { renderKroki } from './render-kroki'
 import { renderTables } from './render-tables'
 import { renderIframes } from './render-iframes'
 import { renderEmphasis } from './render-emphasis'
@@ -30,7 +31,7 @@ import { configField, type EditorConfiguration } from '../util/configuration'
 const renderCompartment = new Compartment()
 
 const transactionExtender = EditorState.transactionExtender.from(configField, config => transaction => {
-  const ext: Extension[] = [ renderMermaid, renderAcronyms ]
+  const ext: Extension[] = [ renderMermaid, renderKroki, renderAcronyms ]
   if (config.renderImages) ext.push(renderImages)
   if (config.renderLinks) ext.push(renderLinks)
   if (config.renderMath) ext.push(renderMath)
