@@ -13,10 +13,11 @@
  */
 
 import { renderInlineWidgets } from './base-renderer'
-import { SyntaxNodeRef, SyntaxNode } from '@lezer/common'
-import { EditorView, WidgetType } from '@codemirror/view'
-import { EditorState } from '@codemirror/state'
+import { type SyntaxNodeRef, type SyntaxNode } from '@lezer/common'
+import { type EditorView, WidgetType } from '@codemirror/view'
+import { type EditorState } from '@codemirror/state'
 import clickAndSelect from './click-and-select'
+import { equationMenu } from '@common/modules/markdown-editor/context-menu/equation-menu'
 
 const ipcRenderer = window.ipc
 class AcronymWidget extends WidgetType {
@@ -51,11 +52,14 @@ class AcronymWidget extends WidgetType {
       contents = result
     } else {
       elem.setAttribute('title', 'unknown acronym')
-      elem.setAttribute('style', `${elem.getAttribute('style') ?? ''}color: red`)
+      elem.setAttribute('style', `color:red;${elem.getAttribute('style') ?? ''}`)
     }
 
     elem.textContent = contents
-    elem.addEventListener('mousedown', clickAndSelect(view, this.node))
+    elem.addEventListener('click', clickAndSelect(view))
+    elem.addEventListener('contextmenu', (event) => {
+      console.log(event)
+    })
     return elem
   }
 

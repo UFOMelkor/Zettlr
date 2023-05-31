@@ -12,18 +12,57 @@
  * END HEADER
  */
 
-import { AutocompletePlugin } from '.'
-import { EditorView } from '@codemirror/view'
-import { Completion } from '@codemirror/autocomplete'
+import { type AutocompletePlugin } from '.'
+import { type EditorView } from '@codemirror/view'
+import { type Completion } from '@codemirror/autocomplete'
 
 const ipcRenderer = window.ipc
+
+export const acronymClassesWithoutAttributes: AutocompletePlugin = {
+  applies (ctx) {
+    const { text, from } = ctx.state.doc.lineAt(ctx.pos)
+    const textBefore = text.slice(0, ctx.pos - from)
+    if (/\+\w+\.\w*$/.test(textBefore)) {
+      // The text immediately before the cursor matches a valid acronym without attributes and a dot afterwards
+      return from + textBefore.lastIndexOf('+')
+    }
+    // Nopey
+    return false
+  },
+
+  entries (ctx, query) {
+    query = query.toLowerCase()
+    if (!query.includes('.') || !query.includes('+')) {
+      return []
+    }
+
+    const acronymLowerCase = query.slice(1, query.indexOf('.'))
+    const suffix = query.slice(query.indexOf('.') + 1)
+
+    // First get the acronym
+    const acronymId = (ipcRenderer.sendSync('acronyms-provider', { command: 'all-acronyms', payload: {} }) as Array<{ id: string, full: string, long: string, short: string }>)
+      .find((each) => each.id.toLowerCase() === acronymLowerCase)?.id
+
+    if (typeof acronymId === 'undefined') {
+      return []
+    }
+
+    const entries: Array<{ label: string }> = ipcRenderer.sendSync('acronyms-provider', { command: 'all-classes', payload: {} }).map((each: string) => ({ label: each }))
+    return entries.filter((entry) => {
+      return entry.label.toLowerCase().includes(suffix)
+    }).map((each) => ({
+      apply: '[+' + acronymId + ']{.' + each.label + '}',
+      label: each.label
+    }))
+  }
+}
 
 export const acronymClasses: AutocompletePlugin = {
   applies (ctx) {
     const { text, from } = ctx.state.doc.lineAt(ctx.pos)
     const textBefore = text.slice(0, ctx.pos - from)
     if (/\[\+\w+]{(\s*\.\w*)+$/.test(textBefore)) {
-      // The text immediately before the cursor matches a valid citation
+      // The text immediately before the cursor matches a valid acronym
       return from + textBefore.lastIndexOf('.') + 1
     } else {
       // Nopey
@@ -32,8 +71,8 @@ export const acronymClasses: AutocompletePlugin = {
   },
   entries (ctx, query) {
     query = query.toLowerCase()
-    const entries = ipcRenderer.sendSync('acronyms-provider', { command: 'all-classes', payload: {} }).map((each) => ({ label: each }))
-    return entries.filter(entry => {
+    const entries: Array<{ label: string }> = ipcRenderer.sendSync('acronyms-provider', { command: 'all-classes', payload: {} }).map((each: string) => ({ label: each }))
+    return entries.filter((entry) => {
       return entry.label.toLowerCase().includes(query)
     })
   }
@@ -49,20 +88,16 @@ export const acronyms: AutocompletePlugin = {
     const textBefore = text.slice(0, ctx.pos - from)
     if (text.startsWith('+') && ctx.pos - from === 1) {
       // The line starts with an + and the cursor is directly behind it
-      console.log('APPLIES')
       return ctx.pos
     } else if (/(?<=[[\s])\+[^[\]]*$/.test(textBefore)) {
-      // The text immediately before the cursor matches a valid citation
-      console.log('APPLIES')
+      // The text immediately before the cursor matches a valid acronym
       return from + textBefore.lastIndexOf('+') + 1
     }
-    console.log(textBefore, 'NOPE')
     return false
   },
   entries (ctx, query) {
     query = query.toLowerCase()
     let bracketBefore = (ctx.matchBefore(/\[\+/))
-    console.log(query)
     const acronyms = (ipcRenderer.sendSync('acronyms-provider', { command: 'all-acronyms', payload: {} }) as Array<{ id: string, full: string, long: string, short: string }>)
       .filter((each) => each.id.toLowerCase().includes(query) || each.full.toLowerCase().includes(query))
     acronyms.sort((a, b) => {

@@ -1,6 +1,6 @@
 import ProviderContract from '@providers/provider-contract'
 import { FSWatcher } from 'chokidar'
-import LogProvider from '@providers/log'
+import type LogProvider from '@providers/log'
 import { promises as fs } from 'fs'
 import YAML from 'yaml'
 import { ipcMain } from 'electron'
@@ -63,6 +63,9 @@ export default class AcronymsProvider extends ProviderContract {
 
   getAcronymClasses (): string[] {
     const endingClasses = Object.keys(this._database.config?.endings ?? {})
+    const defaultEndings = [ 'short', 'plural', 'caps', 'long', 'full' ]
+    endingClasses.push(...defaultEndings.filter((each) => !endingClasses.includes(each)))
+    endingClasses.sort()
     return endingClasses
   }
 
