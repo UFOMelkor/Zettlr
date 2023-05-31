@@ -65,7 +65,7 @@ const transactionExtender = EditorState.transactionExtender.from(configField, co
  * @return  {Extension}                             The extension set
  */
 export function renderers (config?: Partial<EditorConfiguration>): Extension {
-  const ext: Extension[] = [ renderMermaid, renderAcronyms ]
+  const ext: Extension[] = [ renderMermaid, renderKroki, renderAcronyms ]
   if (config?.renderImages === true) ext.push(renderImages)
   if (config?.renderLinks === true) ext.push(renderLinks)
   if (config?.renderMath === true) ext.push(renderMath)
