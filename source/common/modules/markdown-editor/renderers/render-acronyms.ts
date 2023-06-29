@@ -17,7 +17,6 @@ import { type SyntaxNodeRef, type SyntaxNode } from '@lezer/common'
 import { type EditorView, WidgetType } from '@codemirror/view'
 import { type EditorState } from '@codemirror/state'
 import clickAndSelect from './click-and-select'
-import { equationMenu } from '@common/modules/markdown-editor/context-menu/equation-menu'
 
 const ipcRenderer = window.ipc
 class AcronymWidget extends WidgetType {
