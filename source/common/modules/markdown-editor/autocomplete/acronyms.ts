@@ -49,8 +49,8 @@ export const acronymClassesWithoutAttributes: AutocompletePlugin = {
 
     const entries: Array<{ label: string }> = ipcRenderer.sendSync('acronyms-provider', { command: 'all-classes', payload: {} }).map((each: string) => ({ label: each }))
     entries.sort((a, b) => {
-      const aStartsWith = a.label.toLowerCase().startsWith(query)
-      const bStartsWith = b.label.toLowerCase().startsWith(query)
+      const aStartsWith = a.label.toLowerCase().startsWith(suffix)
+      const bStartsWith = b.label.toLowerCase().startsWith(suffix)
       if (aStartsWith && !bStartsWith) {
         return -1
       }
