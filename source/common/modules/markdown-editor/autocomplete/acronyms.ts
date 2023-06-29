@@ -48,6 +48,17 @@ export const acronymClassesWithoutAttributes: AutocompletePlugin = {
     }
 
     const entries: Array<{ label: string }> = ipcRenderer.sendSync('acronyms-provider', { command: 'all-classes', payload: {} }).map((each: string) => ({ label: each }))
+    entries.sort((a, b) => {
+      const aStartsWith = a.label.toLowerCase().startsWith(query)
+      const bStartsWith = b.label.toLowerCase().startsWith(query)
+      if (aStartsWith && !bStartsWith) {
+        return -1
+      }
+      if (bStartsWith && !aStartsWith) {
+        return 1
+      }
+      return 0
+    })
     return entries.filter((entry) => {
       return entry.label.toLowerCase().includes(suffix)
     }).map((each) => ({
@@ -72,6 +83,17 @@ export const acronymClasses: AutocompletePlugin = {
   entries (ctx, query) {
     query = query.toLowerCase()
     const entries: Array<{ label: string }> = ipcRenderer.sendSync('acronyms-provider', { command: 'all-classes', payload: {} }).map((each: string) => ({ label: each }))
+    entries.sort((a, b) => {
+      const aStartsWith = a.label.toLowerCase().startsWith(query)
+      const bStartsWith = b.label.toLowerCase().startsWith(query)
+      if (aStartsWith && !bStartsWith) {
+        return -1
+      }
+      if (bStartsWith && !aStartsWith) {
+        return 1
+      }
+      return 0
+    })
     return entries.filter((entry) => {
       return entry.label.toLowerCase().includes(query)
     })
