@@ -21,7 +21,7 @@ export const acronymParser: InlineParser = {
   before: 'Link', // [+lol] will otherwise be detected as a link
   parse (ctx, next, pos) {
     const relativePosition = pos - ctx.offset
-    const matchWithBrackets = /\[\+\p{Letter}+\]\{(\.\w+\s?)+\}/u.exec(ctx.text.slice(relativePosition))
+    const matchWithBrackets = /\[\+\p{Letter}+\]\{(\.\w+\s?)*\}/u.exec(ctx.text.slice(relativePosition))
 
     if (matchWithBrackets !== null && matchWithBrackets.index <= 0) {
       return ctx.addElement(ctx.elt('Acronym', pos, pos + matchWithBrackets[0].length))
