@@ -36,7 +36,7 @@ class AcronymWidget extends WidgetType {
     let contents = this.nodeContents
     let id = contents
     let classes: string[] = []
-    let matchComplex = contents.match(/\[\+(.*)]\{([^}]+)\}/)
+    let matchComplex = contents.match(/\[\+(.*)]\{([^}]*)\}/)
     let matchSimple = contents.match(/^\+(.*)\s*$/)
     if (matchComplex != null) {
       id = matchComplex[1]
