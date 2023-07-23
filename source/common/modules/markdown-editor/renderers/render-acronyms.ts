@@ -56,9 +56,6 @@ class AcronymWidget extends WidgetType {
 
     elem.textContent = contents
     elem.addEventListener('click', clickAndSelect(view))
-    elem.addEventListener('contextmenu', (event) => {
-      console.log(event)
-    })
     return elem
   }
 
