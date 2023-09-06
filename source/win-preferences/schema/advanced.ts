@@ -108,6 +108,25 @@ export default function (): any {
           model: 'watchdog.stabilityThreshold',
           disabled: window.config.get('watchdog.activatePolling') === false
         }
+      ],
+      [
+        {
+          type: 'checkbox',
+          label: trans('Use System-Proxy'),
+          model: 'system.proxy.useSystemProxy'
+        },
+        {
+          type: 'text',
+          label: trans('HTTP-Proxy'),
+          model: 'system.proxy.http',
+          disabled: window.config.get('system.proxy.useSystemProxy') === true
+        },
+        {
+          type: 'text',
+          label: trans('HTTPS-Proxy'),
+          model: 'system.proxy.https',
+          disabled: window.config.get('system.proxy.useSystemProxy') === true
+        }
       ]
     ]
   }

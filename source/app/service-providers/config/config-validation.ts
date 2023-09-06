@@ -40,7 +40,10 @@ const RULES = {
   'cslLibrary': 'optional|string|default:',
   'display.imageWidth': 'required|number|min:1|max:100|default:100',
   'display.imageHeight': 'required|number|min:1|max:100|default:100',
-  'watchdog.stabilityThreshold': 'optional|number|min:1|max:100000|default:1000'
+  'watchdog.stabilityThreshold': 'optional|number|min:1|max:100000|default:1000',
+  'system.proxy.useSystemProxy': 'required|boolean|default:false',
+  'system.proxy.http': 'optional|string|default:',
+  'system.proxy.https': 'optional|string|default:'
 }
 
 export const VALIDATE_RULES = Object.values(RULES)

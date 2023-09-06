@@ -230,7 +230,12 @@ export default function getConfigTemplate (): ConfigOptions {
       avoidNewTabs: false, // Whether to avoid opening new tabs for documents if possible
       iframeWhitelist: [ 'www.youtube.com', 'player.vimeo.com' ], // Contains a list of whitelisted iFrame prerendering domains
       checkForUpdates: true,
-      zoomBehavior: 'gui' // Used to determine what gets zoomed: The GUI or the editor
+      zoomBehavior: 'gui', // Used to determine what gets zoomed: The GUI or the editor
+      proxy: {
+        useSystemDefault: false,
+        http: '',
+        https: '',
+      }
     },
     checkForBeta: false, // Should the user be notified of beta releases?
     displayToolbarButtons: {

@@ -70,11 +70,29 @@ export async function bootApplication (): Promise<AppServiceContainer> {
 
   registerCustomProtocols(log)
 
-  // Use a proxy if one has been configured
-  bootstrap()
-
   // Now boot up the service container
   await appServiceContainer.boot()
+
+  // Use a proxy if one has been configured
+  if (config.get('system.proxy.useSystemProxy')) {
+    bootstrap()
+    if (process.env.HTTP_PROXY) {
+      // @ts-expect-error the GLOBAL_AGENT variable has no type definition
+      global.GLOBAL_AGENT.HTTP_PROXY = process.env.HTTP_PROXY
+      // @ts-expect-error the GLOBAL_AGENT variable has no type definition
+      global.GLOBAL_AGENT.HTTPS_PROXY = process.env.HTTPS_PROXY
+      // @ts-expect-error the GLOBAL_AGENT variable has no type definition
+      console.error(global.GLOBAL_AGENT)
+    }
+  } else if (config.get('system.proxy.http').trim() || config.get('system.proxy.https').trim()) {
+    bootstrap()
+    // @ts-expect-error the GLOBAL_AGENT variable has no type definition
+    global.GLOBAL_AGENT.HTTP_PROXY = config.get('system.proxy.http')
+    // @ts-expect-error the GLOBAL_AGENT variable has no type definition
+    global.GLOBAL_AGENT.HTTPS_PROXY = config.get('system.proxy.https')
+    // @ts-expect-error the GLOBAL_AGENT variable has no type definition
+    console.error(global.GLOBAL_AGENT)
+  }
 
   // If we have a bundled pandoc, unshift its path to env.PATH in order to have
   // the system search there first for the binary, and not use the internal
