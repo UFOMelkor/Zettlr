@@ -111,7 +111,7 @@ export const acronyms: AutocompletePlugin = {
     if (text.startsWith('+') && ctx.pos - from === 1) {
       // The line starts with an + and the cursor is directly behind it
       return ctx.pos
-    } else if (/(?<=[[\s])\+[^[\]]*$/.test(textBefore)) {
+    } else if (/(?<=[[\s])\+[^[\].]*$/.test(textBefore)) {
       // The text immediately before the cursor matches a valid acronym
       return from + textBefore.lastIndexOf('+') + 1
     }
