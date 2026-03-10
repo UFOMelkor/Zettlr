@@ -70,6 +70,7 @@ import { pascal } from '@codemirror/legacy-modes/mode/pascal'
 import { nix } from '@replit/codemirror-lang-nix'
 
 // Additional parser
+import { acronymParser } from './acronym-parser'
 import { citationParser } from './citation-parser'
 import { footnoteComposite, footnoteParser, footnoteRefParser } from './footnote-parser'
 import { frontmatterParser, yamlCodeParse } from './frontmatter-parser'
@@ -218,6 +219,7 @@ export default function markdownParser (config?: MarkdownParserConfig): Language
         pandocSpanParser,
         inlineMathParser,
         footnoteParser,
+        acronymParser,
         citationParser,
         zknLinkParser(config?.zknLinkParserConfig),
         zknTagParser,
@@ -232,6 +234,7 @@ export default function markdownParser (config?: MarkdownParserConfig): Language
         { name: 'YAMLFrontmatter', block: true },
         { name: 'YAMLFrontmatterStart', style: customTags.YAMLFrontmatterStart },
         { name: 'YAMLFrontmatterEnd', style: customTags.YAMLFrontmatterEnd },
+        { name: 'Acronym', style: customTags.Acronym },
         // Citation elements
         { name: 'Citation', style: { 'Citation/...': customTags.Citation } },
         { name: 'CitationMark', style: customTags.CitationMark },

@@ -26,6 +26,7 @@ export const customTags = {
   YAMLFrontmatterPair: Tag.define(),
   YAMLFrontmatterSeq: Tag.define(),
   YAMLFrontmatterMap: Tag.define(),
+  Acronym: Tag.define(),
   Citation: Tag.define(),
   CitationMark: Tag.define(tags.processingInstruction),
   CitationPrefix: Tag.define(),

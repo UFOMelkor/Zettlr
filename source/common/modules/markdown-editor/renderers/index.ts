@@ -20,6 +20,7 @@ import { renderLinks } from './render-links'
 import { renderMath } from './render-math'
 import { renderTasks } from './render-tasks'
 import { renderCitations } from './render-citations'
+import { renderAcronyms } from './render-acronyms'
 import { renderMermaid } from './render-mermaid'
 import { renderKroki } from './render-kroki'
 import { renderTables } from '../table-editor'
@@ -68,6 +69,7 @@ function configureRenderers (config: Partial<EditorConfiguration>, ext?: Extensi
     updateExtension(renderTasks, config.renderTasks, ext)
     updateExtension(renderHeadings, config.renderHeadings, ext)
     updateExtension(renderCitations, config.renderCitations, ext)
+    updateExtension(renderAcronyms, true, ext)
     updateExtension(renderTables, config.renderTables, ext)
     updateExtension(renderIframes, config.renderIframes, ext)
     updateExtension(renderEmphasis, config.renderEmphasis, ext)
